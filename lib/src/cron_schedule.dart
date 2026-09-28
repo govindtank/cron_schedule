@@ -146,10 +146,18 @@ class CronSchedule {
 
   /// Determines if this schedule matches the exact given [dateTime].
   bool isDue(DateTime dateTime) {
-    if (hasSeconds && !seconds.matches(dateTime.second)) return false;
-    if (!minutes.matches(dateTime.minute)) return false;
-    if (!hours.matches(dateTime.hour)) return false;
-    if (!month.matches(dateTime.month)) return false;
+    if (hasSeconds && !seconds.matches(dateTime.second)) {
+      return false;
+    }
+    if (!minutes.matches(dateTime.minute)) {
+      return false;
+    }
+    if (!hours.matches(dateTime.hour)) {
+      return false;
+    }
+    if (!month.matches(dateTime.month)) {
+      return false;
+    }
 
     final bool domMatches = dayOfMonth.matches(dateTime.day);
     // Convert Dart weekday (1=Mon..7=Sun) to cron standard (0=Sun..6=Sat)
@@ -229,7 +237,9 @@ class CronSchedule {
 
     for (int i = 0; i < count; i++) {
       final nextTime = next(after: cursor);
-      if (nextTime == null) break;
+      if (nextTime == null) {
+        break;
+      }
       results.add(nextTime);
       cursor = nextTime;
     }
@@ -240,14 +250,18 @@ class CronSchedule {
   /// Converts the cron schedule into a human-readable English summary.
   String toHumanReadable() {
     final String clean = expression.trim().toLowerCase();
-    if (clean == '@daily' || clean == '0 0 * * *')
+    if (clean == '@daily' || clean == '0 0 * * *') {
       return 'Every day at midnight (00:00)';
-    if (clean == '@hourly' || clean == '0 * * * *')
+    }
+    if (clean == '@hourly' || clean == '0 * * * *') {
       return 'Every hour on the hour';
-    if (clean == '@weekly' || clean == '0 0 * * 0')
+    }
+    if (clean == '@weekly' || clean == '0 0 * * 0') {
       return 'Every Sunday at midnight';
-    if (clean == '@monthly' || clean == '0 0 1 * *')
+    }
+    if (clean == '@monthly' || clean == '0 0 1 * *') {
       return 'On the first day of every month at midnight';
+    }
 
     final buffer = StringBuffer();
 
@@ -284,8 +298,8 @@ class CronSchedule {
 
     // Day of Month
     if (dayOfMonth.allowedValues.length < 31) {
-      buffer
-          .write(', on day ${dayOfMonth.allowedValues.join(',')} of the month');
+      buffer.write(
+          ', on day ${dayOfMonth.allowedValues.join(',')} of the month');
     }
 
     return buffer.toString();

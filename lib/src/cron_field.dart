@@ -32,7 +32,9 @@ class CronField {
 
     final List<String> segments = clean.split(',');
     for (final segment in segments) {
-      if (segment.isEmpty) continue;
+      if (segment.isEmpty) {
+        continue;
+      }
 
       if (segment == '*') {
         for (int i = min; i <= max; i++) {
@@ -40,15 +42,18 @@ class CronField {
         }
       } else if (segment.startsWith('*/')) {
         final int step = int.parse(segment.substring(2));
-        if (step <= 0) throw FormatException('Invalid step $step in $name');
+        if (step <= 0) {
+          throw FormatException('Invalid step $step in $name');
+        }
         for (int i = min; i <= max; i += step) {
           values.add(i);
         }
       } else if (segment.contains('-')) {
         final List<String> rangeParts = segment.split('/');
         final List<String> bounds = rangeParts[0].split('-');
-        if (bounds.length != 2)
+        if (bounds.length != 2) {
           throw FormatException('Invalid range $segment in $name');
+        }
 
         final int start = _resolveValue(bounds[0], min, max, aliases);
         final int end = _resolveValue(bounds[1], min, max, aliases);
