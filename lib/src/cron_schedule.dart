@@ -298,8 +298,8 @@ class CronSchedule {
 
     // Day of Month
     if (dayOfMonth.allowedValues.length < 31) {
-      buffer.write(
-          ', on day ${dayOfMonth.allowedValues.join(',')} of the month');
+      buffer
+          .write(', on day ${dayOfMonth.allowedValues.join(',')} of the month');
     }
 
     return buffer.toString();
