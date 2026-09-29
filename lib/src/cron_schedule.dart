@@ -230,6 +230,58 @@ class CronSchedule {
     return null;
   }
 
+  /// Computes the previous occurrence [DateTime] before [before] (defaults to `DateTime.now()`).
+  DateTime? previous({DateTime? before}) {
+    final DateTime start = (before ?? DateTime.now());
+    DateTime candidate = hasSeconds
+        ? start.subtract(const Duration(seconds: 1))
+        : DateTime(start.year, start.month, start.day, start.hour, start.minute)
+            .subtract(const Duration(minutes: 1));
+
+    final DateTime limit = candidate.subtract(const Duration(days: 365 * 5));
+
+    while (candidate.isAfter(limit)) {
+      if (!month.matches(candidate.month)) {
+        // Step back to last day of previous month
+        candidate = DateTime(candidate.year, candidate.month, 0, 23, 59, hasSeconds ? 59 : 0);
+        continue;
+      }
+
+      final int cronDow = candidate.weekday % 7;
+      final bool domMatches = dayOfMonth.matches(candidate.day);
+      final bool dowMatches = dayOfWeek.matches(cronDow);
+      final bool domRestricted = dayOfMonth.allowedValues.length < 31;
+      final bool dowRestricted = dayOfWeek.allowedValues.length < 7;
+      final bool dayMatches = (domRestricted && dowRestricted)
+          ? (domMatches || dowMatches)
+          : (domMatches && dowMatches);
+
+      if (!dayMatches) {
+        candidate = DateTime(candidate.year, candidate.month, candidate.day - 1, 23, 59, hasSeconds ? 59 : 0);
+        continue;
+      }
+
+      if (!hours.matches(candidate.hour)) {
+        candidate = DateTime(candidate.year, candidate.month, candidate.day, candidate.hour - 1, 59, hasSeconds ? 59 : 0);
+        continue;
+      }
+
+      if (!minutes.matches(candidate.minute)) {
+        candidate = candidate.subtract(const Duration(minutes: 1));
+        continue;
+      }
+
+      if (hasSeconds && !seconds.matches(candidate.second)) {
+        candidate = candidate.subtract(const Duration(seconds: 1));
+        continue;
+      }
+
+      return candidate;
+    }
+
+    return null;
+  }
+
   /// Computes a list of the next [count] occurrence timestamps.
   List<DateTime> nextOccurrences({int count = 5, DateTime? after}) {
     final List<DateTime> results = [];

@@ -1,3 +1,13 @@
+## 1.1.0
+
+* Converted to pure Dart package (zero Flutter SDK dependency).
+* Added `previous({DateTime? before})` method to compute previous occurrences.
+* Added explicit `platforms` declaration (Android, iOS, Web, macOS, Windows, Linux).
+
+## 1.0.0 Converted to pure Dart package — no Flutter SDK dependency required.
+* Works in Dart CLI apps, server-side Dart, and Flutter projects.
+* Added `platforms` declaration for pub.dev compatibility scoring.
+
 ## 1.0.0
 
 * Initial stable release of `cron_schedule`.

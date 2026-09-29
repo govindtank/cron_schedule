@@ -1,52 +1,60 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:cron_schedule/cron_schedule.dart';
 
 void main() {
-  group('CronSchedule Next Occurrence Tests', () {
+  group('CronSchedule Next & Previous Occurrence Tests', () {
     test('Calculates next occurrence for daily schedule at 09:00', () {
       final schedule = CronSchedule.parse('0 9 * * *');
-
-      // Given current time is 2026-10-01 08:30:00
-      final base = DateTime(2026, 10, 1, 8, 30);
+      final base = DateTime(2026, 6, 15, 8, 30);
       final next = schedule.next(after: base);
 
-      expect(next, DateTime(2026, 10, 1, 9, 0));
+      expect(next, DateTime(2026, 6, 15, 9, 0));
+    });
+
+    test('Calculates previous occurrence for daily schedule at 09:00', () {
+      final schedule = CronSchedule.parse('0 9 * * *');
+      final base = DateTime(2026, 6, 15, 8, 30);
+      final prev = schedule.previous(before: base);
+
+      expect(prev, DateTime(2026, 6, 14, 9, 0));
     });
 
     test('Calculates next occurrence rolling over to next day', () {
       final schedule = CronSchedule.parse('0 9 * * *');
-
-      // Given current time is 2026-10-01 09:15:00
-      final base = DateTime(2026, 10, 1, 9, 15);
+      final base = DateTime(2026, 6, 15, 9, 30);
       final next = schedule.next(after: base);
 
-      expect(next, DateTime(2026, 10, 2, 9, 0));
+      expect(next, DateTime(2026, 6, 16, 9, 0));
     });
 
     test('nextOccurrences returns multiple upcoming timestamps in order', () {
-      final schedule = CronSchedule.parse('0 8 * * *');
-      final base = DateTime(2026, 10, 1, 0, 0);
+      final schedule = CronSchedule.parse('0 0 1 * *'); // 1st of month
+      final base = DateTime(2026, 1, 1, 12, 0);
+      final occurrences = schedule.nextOccurrences(count: 3, after: base);
 
-      final upcoming = schedule.nextOccurrences(count: 3, after: base);
-      expect(upcoming.length, 3);
-      expect(upcoming[0], DateTime(2026, 10, 1, 8, 0));
-      expect(upcoming[1], DateTime(2026, 10, 2, 8, 0));
-      expect(upcoming[2], DateTime(2026, 10, 3, 8, 0));
+      expect(occurrences, [
+        DateTime(2026, 2, 1, 0, 0),
+        DateTime(2026, 3, 1, 0, 0),
+        DateTime(2026, 4, 1, 0, 0),
+      ]);
     });
 
     test('isDue correctly matches exact timestamp', () {
-      final schedule = CronSchedule.parse('30 14 * * *');
+      final schedule = CronSchedule.parse('15 14 1 5 *');
+      final match = DateTime(2026, 5, 1, 14, 15);
+      final noMatch = DateTime(2026, 5, 1, 14, 16);
 
-      expect(schedule.isDue(DateTime(2026, 10, 1, 14, 30)), isTrue);
-      expect(schedule.isDue(DateTime(2026, 10, 1, 14, 31)), isFalse);
+      expect(schedule.isDue(match), isTrue);
+      expect(schedule.isDue(noMatch), isFalse);
     });
 
     test('toHumanReadable translates expressions into natural language', () {
-      final daily = CronSchedule.parse('0 0 * * *');
-      expect(daily.toHumanReadable(), contains('midnight'));
-
-      final weekdays = CronSchedule.parse('0 9 * * 1-5');
-      expect(weekdays.toHumanReadable(), contains('Monday through Friday'));
+      expect(CronSchedule.parse('@daily').toHumanReadable(),
+          'Every day at midnight (00:00)');
+      expect(CronSchedule.parse('@hourly').toHumanReadable(),
+          'Every hour on the hour');
+      expect(CronSchedule.parse('0 9 * * 1-5').toHumanReadable(),
+          'At 09:00, Monday through Friday');
     });
   });
 }
