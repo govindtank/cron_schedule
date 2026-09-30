@@ -1,12 +1,13 @@
+## 1.1.1
+
+* Added `MultiCronSchedule` to evaluate multiple cron schedules together and return the earliest upcoming trigger.
+* Verified CI/CD workflows.
+
 ## 1.1.0
 
 * Converted to pure Dart package (zero Flutter SDK dependency).
 * Added `previous({DateTime? before})` method to compute previous occurrences.
 * Added explicit `platforms` declaration (Android, iOS, Web, macOS, Windows, Linux).
-
-## 1.0.0 Converted to pure Dart package — no Flutter SDK dependency required.
-* Works in Dart CLI apps, server-side Dart, and Flutter projects.
-* Added `platforms` declaration for pub.dev compatibility scoring.
 
 ## 1.0.0
 
@@ -18,8 +19,3 @@
 * Fluent type-safe builder (`CronSchedule.builder()`).
 * Interactive example app with real-time expression parsing, presets, and upcoming forecast list.
 * 100% test coverage and zero pub.dev warnings.
-
-## 1.1.1
-
-* Added `MultiCronSchedule` to evaluate multiple cron schedules together and return the earliest upcoming trigger.
-* Configured automated pub.dev OIDC publishing.
