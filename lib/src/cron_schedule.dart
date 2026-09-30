@@ -243,7 +243,8 @@ class CronSchedule {
     while (candidate.isAfter(limit)) {
       if (!month.matches(candidate.month)) {
         // Step back to last day of previous month
-        candidate = DateTime(candidate.year, candidate.month, 0, 23, 59, hasSeconds ? 59 : 0);
+        candidate = DateTime(
+            candidate.year, candidate.month, 0, 23, 59, hasSeconds ? 59 : 0);
         continue;
       }
 
@@ -257,12 +258,14 @@ class CronSchedule {
           : (domMatches && dowMatches);
 
       if (!dayMatches) {
-        candidate = DateTime(candidate.year, candidate.month, candidate.day - 1, 23, 59, hasSeconds ? 59 : 0);
+        candidate = DateTime(candidate.year, candidate.month, candidate.day - 1,
+            23, 59, hasSeconds ? 59 : 0);
         continue;
       }
 
       if (!hours.matches(candidate.hour)) {
-        candidate = DateTime(candidate.year, candidate.month, candidate.day, candidate.hour - 1, 59, hasSeconds ? 59 : 0);
+        candidate = DateTime(candidate.year, candidate.month, candidate.day,
+            candidate.hour - 1, 59, hasSeconds ? 59 : 0);
         continue;
       }
 
