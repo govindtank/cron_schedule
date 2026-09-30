@@ -18,3 +18,8 @@
 * Fluent type-safe builder (`CronSchedule.builder()`).
 * Interactive example app with real-time expression parsing, presets, and upcoming forecast list.
 * 100% test coverage and zero pub.dev warnings.
+
+## 1.1.1
+
+* Added `MultiCronSchedule` to evaluate multiple cron schedules together and return the earliest upcoming trigger.
+* Configured automated pub.dev OIDC publishing.

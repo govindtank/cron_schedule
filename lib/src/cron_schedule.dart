@@ -363,3 +363,32 @@ class CronSchedule {
   @override
   String toString() => 'CronSchedule($expression)';
 }
+
+/// Multi-cron timeline aggregator.
+class MultiCronSchedule {
+  /// The list of compiled cron schedules.
+  final List<CronSchedule> schedules;
+
+  /// Creates a [MultiCronSchedule] from multiple [CronSchedule] instances.
+  MultiCronSchedule(this.schedules);
+
+  /// Creates a [MultiCronSchedule] by parsing a list of cron expression strings.
+  factory MultiCronSchedule.parseList(List<String> expressions) {
+    return MultiCronSchedule(expressions.map(CronSchedule.parse).toList());
+  }
+
+  /// Calculates the next upcoming occurrence across all configured cron expressions.
+  DateTime? nextOccurrence({DateTime? after}) {
+    if (schedules.isEmpty) return null;
+    DateTime? earliest;
+    for (final s in schedules) {
+      final next = s.next(after: after);
+      if (next != null) {
+        if (earliest == null || next.isBefore(earliest)) {
+          earliest = next;
+        }
+      }
+    }
+    return earliest;
+  }
+}

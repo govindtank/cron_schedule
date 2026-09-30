@@ -7,3 +7,4 @@ library cron_schedule;
 export 'src/cron_field.dart';
 export 'src/cron_builder.dart';
 export 'src/cron_schedule.dart';
+export 'src/cron_schedule.dart' show MultiCronSchedule;
