@@ -1,3 +1,7 @@
+## 1.1.2
+
+* docs: update centered vector badges and documentation.
+
 ## 1.1.1
 
 * Added `MultiCronSchedule` to evaluate multiple cron schedules together and return the earliest upcoming trigger.
