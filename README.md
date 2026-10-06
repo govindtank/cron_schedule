@@ -1,15 +1,11 @@
 # cron_schedule
 
-[![Pub Version](https://img.shields.io/pub/v/cron_schedule.svg?style=flat-square&color=blue)](https://pub.dev/packages/cron_schedule)
-[![Pub Points](https://img.shields.io/pub/points/cron_schedule?style=flat-square&color=2E8B57&label=pub%20points)](https://pub.dev/packages/cron_schedule/score)
-[![Pub Likes](https://img.shields.io/pub/likes/cron_schedule?style=flat-square)](https://pub.dev/packages/cron_schedule)
-[![CI](https://github.com/govindtank/cron_schedule/actions/workflows/ci.yml/badge.svg)](https://github.com/govindtank/cron_schedule/actions)
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat-square)](LICENSE)
-
-A lightweight, high-performance, pure-Dart **cron expression parser**, **next-occurrence timestamp predictor**, **human-readable natural language translator**, and **fluent schedule builder** for Dart and Flutter.
-
 <p align="center">
-  <img src="https://raw.githubusercontent.com/govindtank/cron_schedule/main/screenshot.svg" width="750" alt="cron_schedule demo"/>
+  <a href="https://pub.dev/packages/cron_schedule"><img src="https://img.shields.io/pub/v/cron_schedule.svg?style=flat-square&color=blue" alt="Pub Version"></a>
+  <a href="https://pub.dev/packages/cron_schedule/score"><img src="https://img.shields.io/pub/points/cron_schedule?style=flat-square&color=2E8B57&label=pub%20points" alt="Pub Points"></a>
+  <a href="https://pub.dev/packages/cron_schedule"><img src="https://img.shields.io/pub/likes/cron_schedule?style=flat-square" alt="Pub Likes"></a>
+  <a href="https://github.com/govindtank/cron_schedule/actions"><img src="https://github.com/govindtank/cron_schedule/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat-square" alt="License"></a>
 </p>
 
 ---
